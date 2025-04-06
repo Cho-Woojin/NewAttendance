@@ -259,7 +259,7 @@ button {
     }
 
     .container {
-        width: 100%; /* 화면 전체 너비 사용 */
+        width: 120px; /* 모바일 화면 너비에 맞춤 */
         padding: 20px;
         border-radius: 10px;
     }
