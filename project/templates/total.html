@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2025-1 출석 랭킹</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <style>
@@ -18,7 +19,7 @@
         .table-container {
             max-height: 80vh;
             overflow-y: auto;
-            margin: 20px auto;
+            margin: 10px auto;
             width: 100%;
         }
 
@@ -51,17 +52,9 @@
             margin-bottom: 20px;
         }
 
-        .button-container {
-            margin-bottom: 20px;
-        }
-
-        .button-container a button {
-            margin-right: 10px;
-        }
-
         @media screen and (max-width: 768px) {
             table {
-                width: 100%;
+                width: 90%;
             }
         }
     </style>
@@ -72,8 +65,8 @@
 
     <!-- 홈으로 가기 버튼 -->
     <div class="button-container">
-        <a href="/"><button class="white-button">홈으로</button></a>
-        <a href="/weekly"><button class="white-button">주간 출석부</button></a>
+        <a href="/"><button class="blue-button">홈으로</button></a>
+        <a href="/weekly"><button class="blue-button">주간 출석부</button></a>
     </div>
 
     <div class="table-container">

@@ -177,11 +177,6 @@ button {
     gap: 20px; /* 출근, 퇴근 버튼 사이의 간격 */
 }
 
-.inline-form button {
-    margin: 0; /* 버튼 간 기본 마진 제거 */
-}
-
-
 /* ======================
    공휴일 추가 폼 스타일
 ====================== */
@@ -259,7 +254,7 @@ button {
     }
 
     .container {
-        width: 120px; /* 모바일 화면 너비에 맞춤 */
+        width: 100%; /* 화면 전체 너비 사용 */
         padding: 20px;
         border-radius: 10px;
     }
@@ -285,6 +280,7 @@ button {
 
     button {
         width: 100%; /* 버튼 크기를 화면 너비에 맞춤 */
+        min-width: 120px;  /* ✅ 최소 너비 고정 */
         margin-bottom: 2px; /* 버튼 간 간격 */
         padding: 12px;
         font-size: 14px;
@@ -292,7 +288,6 @@ button {
 
     .button-container {
         flex-direction: row; /* 버튼을 세로로 배치 */
-        gap: 10px;
     }
 
     .table-container {
