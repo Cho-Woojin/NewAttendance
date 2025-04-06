@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <style>
@@ -21,18 +22,54 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 20px;
+            gap: 5px;
+            margin-bottom: 0px;
+            flex-wrap: nowrap; /* 버튼 줄바꿈 방지 */
+            flex-direction: row;
         }
 
-        select, button {
+        .inline-form {
+            display: flex;
+            align-items: center;
+            gap: 6px; /* 드롭다운, 버튼 간 간격 줄이기 */
+            flex-wrap: nowrap;
+        }
+
+
+        select {
             padding: 10px 15px;
             font-size: 14px;
-            border-radius: 5px;
+            border-radius: 20px;
             border: 1px solid #1F4EF5;
             background-color: #F8F9FA;
             color: #1F4EF5;
             cursor: pointer;
+            min-width: 90px;
+            max-width: 120px;
+            box-sizing: border-box;
+
+            text-align: center;
+            text-align-last: center;
+            -moz-text-align-last: center;
+        }
+
+    
+        button {
+            padding: 10px 15px;
+            font-size: 14px;
+            border-radius: 20px;
+            border: 1px solid #1F4EF5;
+            background-color: #F8F9FA;
+            color: #1F4EF5;
+            cursor: pointer;
+            min-width: 90px;       /* 🔒 최소 너비 설정 */
+            max-width: 120px;      /* 📏 최대 너비 제한 (선택 사항) */
+            box-sizing: border-box;
+
+            /* 중앙 정렬 추가 */
+            text-align: center;
+            text-align-last: center;
+            -moz-text-align-last: center;
         }
 
         button {
@@ -49,13 +86,13 @@
         .table-container {
             max-height: 80vh;
             overflow-y: auto;
-            margin: 20px auto;
+            margin: 10px auto;
             width: 100%;
         }
 
         table {
-            width: 90%;
-            margin: 0 auto 20px auto;
+            width: 80%;
+            margin: 10px auto 10px auto;
             border-collapse: collapse;
             text-align: center;
             background-color: white;
@@ -65,6 +102,7 @@
             border: 1px solid #1F4EF5;
             font-size: 14px;
             padding: 5px; /* 여백을 넓히기 위해 padding 추가 */
+            white-space: nowrap; /* 텍스트 줄바꿈 방지 */
         }
 
         th {
@@ -87,8 +125,10 @@
         /* 반응형 디자인 */
         @media screen and (max-width: 768px) {
             .form-container {
-                flex-direction: column;
-                gap: 15px;
+                flex-wrap: nowrap; /* 버튼 줄바꿈 방지 */
+                flex-direction: row;
+                overflow-x: auto;
+                gap: 6px;
             }
 
             table {
@@ -103,7 +143,7 @@
 
     <!-- 조회 폼 -->
     <div class="form-container">
-        <form method="post" action="/weekly">
+        <form method="post" action="/weekly" class="inline-form">
             <select name="month">
                 {% for i in range(1, 13) %}
                     <option value="{{ i }}" {% if i == selected_month %}selected{% endif %}>{{ i }}월</option>
@@ -116,8 +156,9 @@
             </select>
             <button type="submit">조회</button>
         </form>
-        <a href="/"><button>홈으로</button></a>
+        <a href="/"><button class="home-button">홈으로</button></a>
     </div>
+    
 
 
     <!-- 주간 출석부 -->
