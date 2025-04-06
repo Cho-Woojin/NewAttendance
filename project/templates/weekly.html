@@ -10,9 +10,8 @@
             font-family: Arial, sans-serif;
             background-color: #F8F9FA;
             font-size: 14px;
-            margin: 0;
-            padding: 20px;
-            display: flex;
+            padding: 15px;
+            display: flex; /* 페이지 전체를 flexbox로 설정 */
             flex-direction: column;
             align-items: center;
         }
@@ -20,18 +19,19 @@
         /* 조회 폼 스타일 */
         .form-container {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
             gap: 5px;
-            margin-bottom: 0px;
+            margin-bottom: 10px;
             flex-wrap: nowrap; /* 버튼 줄바꿈 방지 */
             flex-direction: row;
+            height: auto; 
         }
 
         .inline-form {
             display: flex;
             align-items: center;
-            gap: 6px; /* 드롭다운, 버튼 간 간격 줄이기 */
+            gap: 5px; /* 드롭다운, 버튼 간 간격 줄이기 */
             flex-wrap: nowrap;
         }
 
@@ -41,10 +41,9 @@
             font-size: 14px;
             border-radius: 20px;
             border: 1px solid #1F4EF5;
-            background-color: #F8F9FA;
             color: #1F4EF5;
             cursor: pointer;
-            min-width: 90px;
+            min-width: 80px;
             max-width: 120px;
             box-sizing: border-box;
 
@@ -62,7 +61,7 @@
             background-color: #F8F9FA;
             color: #1F4EF5;
             cursor: pointer;
-            min-width: 90px;       /* 🔒 최소 너비 설정 */
+            min-width: 80px;       /* 🔒 최소 너비 설정 */
             max-width: 120px;      /* 📏 최대 너비 제한 (선택 사항) */
             box-sizing: border-box;
 
@@ -84,14 +83,13 @@
 
         /* 테이블 스타일 */
         .table-container {
-            max-height: 80vh;
-            overflow-y: auto;
-            margin: 10px auto;
+            overflow-y: visible;
+            margin: 10px;
             width: 100%;
         }
 
         table {
-            width: 80%;
+            width: 100%;
             margin: 10px auto 10px auto;
             border-collapse: collapse;
             text-align: center;
@@ -99,10 +97,13 @@
         }
 
         th, td {
+            height: auto;                /* ✅ 고정 행 높이 */
+            padding: 4px;                /* ✅ 여백 동일하게 */
+            vertical-align: middle;      /* ✅ 내용 정렬 일치 */
             border: 1px solid #1F4EF5;
             font-size: 14px;
-            padding: 5px; /* 여백을 넓히기 위해 padding 추가 */
             white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+            box-sizing: border-box;
         }
 
         th {
@@ -123,10 +124,10 @@
         }
 
         .scroll-table-wrapper {
-    overflow-x: auto;
-    width: 100%;
-    margin-bottom: 20px;
-}
+            overflow-x: auto; 
+            width: 100%;
+            margin-bottom: 20px;
+        }
 
     /* 헤더 셀 스타일 */
     .weekly-table thead th {
@@ -137,11 +138,11 @@
 
     .weekly-table th, .weekly-table td {
         border: 1px solid #1F4EF5;
-        padding: 8px;
+        height: auto;
         white-space: nowrap;
         text-align: center;
-        background-color: #F8F9FA;
-        font-size: 14px;
+        vertical-align: middle;
+        font-size: 14px;   
     }
 
     /* 요일 헤더 */
@@ -157,20 +158,28 @@
         left: 0;
         background-color: #F8F9FA;
         z-index: 2;
+        
     }
 
+
+    
         /* 반응형 디자인 */
         @media screen and (max-width: 768px) {
             .form-container {
-                flex-wrap: nowrap; /* 버튼 줄바꿈 방지 */
-                flex-direction: row;
-                overflow-x: auto;
-                gap: 6px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-wrap: nowrap;
+                justify-content: space-between; /* 요소 간격 조정 */
+                gap: 5px; /* 요소 간 간격 증가 */
             }
 
             table {
-                width: 100%;
+                width: 100%; /* 테이블 크기 조정 */
             }
+
+            .home-button {
+                flex-shrink: 1;  /* ✅ 넘치면 약간씩 줄어듦 */
         }
     </style>
 </head>
@@ -198,40 +207,49 @@
     
     <!-- 주간 출석부 -->
     <div class="scroll-table-wrapper">
-        <table class="weekly-table">
-            <thead>
-                <tr>
-                    <th class="sticky-col" rowspan="2">No.</th>
-                    <th class="sticky-col" rowspan="2">이름</th>
-                    <th colspan="3" class="day-header">월요일</th>
-                    <th colspan="3" class="day-header">화요일</th>
-                    <th colspan="3" class="day-header">수요일</th>
-                    <th colspan="3" class="day-header">목요일</th>
-                    <th colspan="3" class="day-header">금요일</th>
-                </tr>
-                <tr>
-                    {% for day in range(5) %}
-                        <th>출근</th>
-                        <th>퇴근</th>
-                        <th>근무시간</th>
-                    {% endfor %}
-                </tr>
-            </thead>
-            <tbody>
-                {% for idx, (student_name, days) in enumerate(week_data.items(), 1) %}
-                <tr>
-                    <td class="sticky-col">{{ idx }}</td>
-                    <td class="sticky-col">{{ student_name }}</td>
-                    {% for day in days.values() %}
-                        <td>{{ day["출근"] or "-" }}</td>
-                        <td>{{ day["퇴근"] or "-" }}</td>
-                        <td>{{ day["근무시간"] or "-" }}</td>
-                    {% endfor %}
-                </tr>
+    <table class="weekly-table" style="table-layout: fixed;">
+        <colgroup>
+            <col style="width: 30px;">   <!-- No. -->
+            <col style="width: 80px;">   <!-- 이름 -->
+            {% for i in range(5) %}
+                <col style="width: 60px;"> <!-- 출근 -->
+                <col style="width: 60px;"> <!-- 퇴근 -->
+                <col style="width: 60px;"> <!-- 근무시간 -->
+            {% endfor %}
+        </colgroup>
+        <thead>
+            <tr>
+                <th class="sticky-col" rowspan="2">No.</th>
+                <th class="sticky-col" rowspan="2">이름</th>
+                <th colspan="3" class="day-header">월요일</th>
+                <th colspan="3" class="day-header">화요일</th>
+                <th colspan="3" class="day-header">수요일</th>
+                <th colspan="3" class="day-header">목요일</th>
+                <th colspan="3" class="day-header">금요일</th>
+            </tr>
+            <tr>
+                {% for day in range(5) %}
+                    <th>출근</th>
+                    <th>퇴근</th>
+                    <th>근무시간</th>
                 {% endfor %}
-            </tbody>
-        </table>
-    </div>
+            </tr>
+        </thead>
+        <tbody>
+            {% for idx, (student_name, days) in enumerate(week_data.items(), 1) %}
+            <tr>
+                <td class="sticky-col">{{ idx }}</td>
+                <td class="sticky-col">{{ student_name }}</td>
+                {% for day in days.values() %}
+                    <td>{{ day["출근"] or "-" }}</td>
+                    <td>{{ day["퇴근"] or "-" }}</td>
+                    <td>{{ day["근무시간"] or "-" }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
     
 
     <!-- 근무 시간 순위 -->
