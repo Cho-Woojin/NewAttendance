@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2025-1 출석 랭킹</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .page-weekly {
+            font-family: Arial, sans-serif;
+            background-color: #F8F9FA;
+            font-size: 14px;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .table-container {
+            max-height: 80vh;
+            overflow-y: auto;
+            margin: 20px auto;
+            width: 100%;
+        }
+
+        table {
+            width: 90%;
+            margin: 0 auto 20px auto;
+            border-collapse: collapse;
+            text-align: center;
+            background-color: white;
+        }
+
+        th, td {
+            border: 1px solid #1F4EF5;
+            font-size: 14px;
+            padding: 5px;
+        }
+
+        th {
+            background-color: #1F4EF5;
+            color: white;
+        }
+
+        td {
+            background-color: #F8F9FA;
+        }
+
+        h1 {
+            color: #1F4EF5;
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .button-container {
+            margin-bottom: 20px;
+        }
+
+        .button-container a button {
+            margin-right: 10px;
+        }
+
+        @media screen and (max-width: 768px) {
+            table {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body class="page-weekly">
+
+    <h1>IPUD 2025-1 출석 랭킹</h1>
+
+    <!-- 홈으로 가기 버튼 -->
+    <div class="button-container">
+        <a href="/"><button class="white-button">홈으로</button></a>
+        <a href="/weekly"><button class="white-button">주간 출석부</button></a>
+    </div>
+
+    <div class="table-container">
+        <table>
+            <tr>
+                <th>순위</th>
+                <th>이름</th>
+                <th>전체 근무시간</th>
+            </tr>
+            {% for rank, (student_name, total_time) in enumerate(ranked_total_hours, 1) %}
+            <tr class="{% if rank == 1 %}gold{% elif rank == 2 %}silver{% elif rank == 3 %}bronze{% endif %}">
+                <td>
+                    {% if rank == 1 %}👑{% elif rank == 2 %}🥈{% elif rank == 3 %}🥉{% endif %}
+                    {{ rank }}
+                </td>
+                <td>{{ student_name }}</td>
+                <td>{{ total_time }} 시간</td>
+            </tr>
+            {% endfor %}
+
+    </div>
+
+</body>
+</html>
