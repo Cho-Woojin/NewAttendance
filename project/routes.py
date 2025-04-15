@@ -89,7 +89,7 @@ def init_routes(app):
             return render_home("학번과 액션 값을 입력하세요.")
 
          # 출근/퇴근 시간 확인
-        if not is_valid_day_and_time():
+        if not is_valid_day_and_time(action):
             return render_home("출퇴근 가능 시간이 아닙니다. 평일 08:00 ~ 22:00")
 
 
